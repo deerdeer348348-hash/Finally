@@ -952,7 +952,7 @@ window.guardarQuiniela = async function(){
   let ac=0;
   v.picks.forEach((p,i)=>{if(cachedRes[i]&&p===cachedRes[i])ac++;});
   try{
-    await set(ref(db,`quiniela_j3/participantes/${key}`),{
+    await set(ref(db,`quiniela_16vos/participantes/${key}`),{
       nombre:v.nombre,picks:v.picks,ts:Date.now(),
       aciertos:ac,pagado:prev.pagado||false,foto:prev.foto||null,pagoTs:prev.pagoTs||null
     });
@@ -1005,7 +1005,7 @@ window.enviarComprobanteWA=async function(){
   if(!key){showToast("⚠️ Selecciona tu nombre de la lista","error");sel.focus();return;}
   if(!fotoBase64){showToast("⚠️ Primero selecciona o toma una foto","error");return;}
   const nombre=cachedData[key]?.nombre||key;
-  try{await update(ref(db,`quiniela_j3/participantes/${key}`),{foto:fotoBase64});}catch(e){}
+  try{await update(ref(db,`quiniela_16vos/participantes/${key}`),{foto:fotoBase64});}catch(e){}
   const txt=encodeURIComponent(`💳 Comprobante de pago\n👤 ${nombre}\n🏆 Quiniela Mundial 2026 — Jornada 3\n\n(imagen adjunta)`);
   window.open(WA_NUMBER?`https://wa.me/${WA_NUMBER}?text=${txt}`:`https://wa.me/?text=${txt}`,"_blank");
   showToast("📲 Comprobante guardado y WhatsApp abierto");
@@ -1030,7 +1030,7 @@ window.togglePago=async function(key){
   if(!adminLogged)return;
   const prev=cachedData[key]||{};
   const ahora=Date.now();
-  await update(ref(db,`quiniela_j3/participantes/${key}`),{
+  await update(ref(db,`quiniel/participantes/${key}`),{
     pagado:!prev.pagado,
     pagoTs:!prev.pagado?ahora:null
   });
